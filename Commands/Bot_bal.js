@@ -22,6 +22,9 @@ module.exports = {
                 }
                 msg.reply(balancestring);
         });
+    },
+    Info : function() {
+        return "Gets balance on Ponzied MoneroCoins";
     }
 };
 

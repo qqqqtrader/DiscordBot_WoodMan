@@ -6,6 +6,10 @@ module.exports =
 
     Bot_test : function(msg,arg) {
         msg.reply("Test worked!");
+    },
+    
+    Info : function() {
+        return "Self explanatory.";
     }
 };
 

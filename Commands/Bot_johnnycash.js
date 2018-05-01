@@ -11,6 +11,10 @@ module.exports =
 {
     Bot_johnnycash : function(msg,arg) {
         msg.reply("https://www.youtube.com/watch?v=KHF9itPLUo4");
+    },
+    
+    Info : function() {
+        return "Self explanatory.";
     }
 };
 

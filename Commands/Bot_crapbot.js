@@ -20,6 +20,9 @@ module.exports =
     
     NastyMessage : function(channel,user) {
         channel.send('Fuck off ' + user);
+    },
+    Info : function() {
+        return "Nothign really.";
     }
     
 };

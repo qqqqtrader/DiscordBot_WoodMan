@@ -12,7 +12,10 @@ module.exports = {
     Bot_c4 : function(msg,args) {
         if (obj === null) obj =  new Connect4(msg,args);
         obj.MessageIn(msg,args);
-        }
+        },
+    Info : function() {
+        return "Connect 4 game";
+    }
     };
     
 function getRndInteger(min, max) {

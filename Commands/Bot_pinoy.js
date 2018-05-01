@@ -11,6 +11,10 @@ module.exports =
 {
     Bot_pinoy : function(msg,arg) {
         msg.reply("http://www.peppii.com/wp-content/uploads/2015/03/gay-pinoy-2.jpg");
+    },
+    
+    Info : function() {
+        return "Self explanatory.";
     }
 };
 

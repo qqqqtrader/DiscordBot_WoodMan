@@ -12,6 +12,10 @@ module.exports =
 {
     Bot_metallica : function(msg,arg) {
         msg.reply("https://www.youtube.com/watch?v=Ckom3gf57Yw");
+    },
+    
+    Info : function() {
+        return "Self explanatory.";
     }
 };
 

@@ -8,7 +8,10 @@ module.exports = {
     Bot_dogpoop : function(msg,args) {
         var obj =  new DogPooper(msg,args);
         obj.Run();
-        }
+        },
+    Info : function() {
+        return "Self Explanatory";
+    }
     };
        
 class  DogPooper {

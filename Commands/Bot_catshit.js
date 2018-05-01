@@ -3,7 +3,10 @@ module.exports = {
     Bot_catshit : function(msg,args) {
         var obj =  new CatPooper(msg,args);
         obj.Run();
-        }
+        },
+    Info : function() {
+        return "Gets a random picture of a cat shitting.";
+    }
     };
        
 class  CatPooper {

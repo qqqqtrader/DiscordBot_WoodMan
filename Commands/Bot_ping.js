@@ -8,6 +8,9 @@ module.exports =
 {
     Bot_ping : function(msg,arg) {
         msg.reply("Pong!");
+    },
+    Info : function() {
+        return "Self explanatory.";
     }
 };
 

@@ -10,7 +10,6 @@ client.on("ready", () => {
   //client.channels.get('411155617567211522').send('testing 1234, starting up');
   DebugChannel = client.channels.get(auth.DebugChannel);
   DebugChannel.send('Bot code starting up!');
-  
 });
 
 client.on("message", async message => {
@@ -19,7 +18,7 @@ client.on("message", async message => {
         const args = message.content.trim().split(/ +/g);
         const command = args.shift().toLowerCase().slice(1,20);
         var st = "Bot_"+command;
-        console.log(st);
+      
         var module = require("./Commands/"+st+".js");
         module[st](message,args);
         }
