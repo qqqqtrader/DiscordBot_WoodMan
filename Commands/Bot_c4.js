@@ -46,13 +46,14 @@ class Connect4 {
                 obj = null;
                 return;
             }
-        
-        if (this.gameOver) {
-            if (cmd === 'show') {
+            
+         if (cmd === 'show') {
                 this.DrawBoard();
                 ShowNextUp(msg);
                 return;
             }
+        if (this.gameOver) {
+           
             msg.reply("Game is over.  !C4 end to quit");
             return;
         }

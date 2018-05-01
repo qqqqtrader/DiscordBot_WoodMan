@@ -1,4 +1,5 @@
-var auth = require('./ponz.json');
+var auth = require('./auth.json');
+//var auth = require('./ponz.json');
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var getJSON = require('get-json');
