@@ -14,7 +14,7 @@ client.on("ready", () => {
 
 client.on("message", async message => {
     try {
-    if (message.content.startsWith("!")) {
+    if (message.content.startsWith(auth.Prefix)) {
         const args = message.content.trim().split(/ +/g);
         const command = args.shift().toLowerCase().slice(1,20);
         var st = "Bot_"+command;

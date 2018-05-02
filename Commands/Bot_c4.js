@@ -195,7 +195,7 @@ class Connect4 {
         for (i=0;i<8;i++) {
             var test = this.GetBoardLimit(x,y);
             if (test == last) {
-                cons++;
+                if (test != 0) cons++;
                 if (cons >= 4) return test;
             } else {
                 cons = 0;
@@ -268,7 +268,8 @@ class Connect4 {
                     }
                     if (y===0) bg.composite(data[3],0,0);
                 }
-
+                if (obj.player === 1) bg.composite(data[0],256-32,-32);
+                if (obj.player === 2) bg.composite(data[1],256-32,-32);
                 console.log("wrote the image");
                 bg.write('test.png', function() {
                 console.log("wrote the image");
