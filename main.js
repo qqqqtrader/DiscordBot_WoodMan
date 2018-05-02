@@ -34,43 +34,33 @@ client.on("message", async message => {
 
 client.login(auth.Token);
 
-var promise = new Promise(function(resolve, reject) {
-  // do a thing, possibly async, then…
-  var x = Math.random();
-  if (x > 0.5) {
-    resolve("Stuff worked!" + x);
-  }
-  else {
-    reject(Error("It broke"));
-  }
-});
-
-var a,b,c;
-
-
-const promises = [
-  new Promise(resolve => setTimeout(resolve, 0, 1)),
-  new Promise(resolve => setTimeout(resolve, 0, 2))
-];
-
-Promise.all(promises)
-  .then(data => {
-    console.log("First handler", data);
-    return data.map(entry => entry * 10);
-  })
-  .then(data => {
-    console.log("Second handler", data);
+function doSomething(asdf) {
+  return new Promise((resolve, reject) => {
+    //console.log("It is done.");
+    // Succeed half of the time.
+    var x = Math.random();    
+    if (x > .25) {
+      resolve(["SUCCESS",asdf,x])
+    } else {
+      reject(["Failure",asdf,x])
+    }
   });
+}
+
 
 
 func();
 
 function func() {
-    Promise.all([a =  promise, b= promise]).then(function() {
-            console.log("asdfasdfa");
+    var a=doSomething("1").then(function (data) {a = data;});
+    var b=doSomething("2").then(function (data) {b = data;});
+    
+    Promise.all([a, b]).then(function() {
             console.log(a);
             console.log(b);
-    }).catch(function() {console.log('Oops');});
+    }, 
+    (err) => {console.log('Reject:' + err);});
+     
 }
 
 
