@@ -283,7 +283,7 @@ class Connect4 {
     LoadResources() {
 //        this.ipath = "./Commands/Images/";
 //        this.images = ['red.png', 'green.png', 'c4box.png', 'top.png', 'bot.png'];
-    
+    Promise.all()
     console.log("loading shit");
     var file = this.ipath+"c4box.png";
     console.log(file);
@@ -331,6 +331,10 @@ class Connect4 {
         for (y = 0; y < 8; y++) {
             for (x = 0; x < 8; x++) {
                 this.imBg.blit(this.imBox, x * 64, y * 64);
+                
+                //Draw the numbers
+                if ((x===7)&&(y===0)) this.imBg.composite(this.imTop, 0, 0);
+            
         
                 var tile = obj.board[x][y];
                 if (tile === 1) {
@@ -341,9 +345,7 @@ class Connect4 {
                     this.imBg.composite(this.imGreen, x * 64, y * 64);
                 }
             }
-            if (y === 0) {
-                this.imBg.composite(this.imTop, 0, 0);
-            }
+           
         }
         if (!obj.gameFinished) {
             if (obj.player === 1)

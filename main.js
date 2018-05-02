@@ -34,6 +34,49 @@ client.on("message", async message => {
 
 client.login(auth.Token);
 
+var promise = new Promise(function(resolve, reject) {
+  // do a thing, possibly async, then…
+  var x = Math.random();
+  if (x > 0.5) {
+    resolve("Stuff worked!" + x);
+  }
+  else {
+    reject(Error("It broke"));
+  }
+});
+
+var a,b,c;
+
+
+const promises = [
+  new Promise(resolve => setTimeout(resolve, 0, 1)),
+  new Promise(resolve => setTimeout(resolve, 0, 2))
+];
+
+Promise.all(promises)
+  .then(data => {
+    console.log("First handler", data);
+    return data.map(entry => entry * 10);
+  })
+  .then(data => {
+    console.log("Second handler", data);
+  });
+
+
+func();
+
+function func() {
+    Promise.all([a =  promise, b= promise]).then(function() {
+            console.log("asdfasdfa");
+            console.log(a);
+            console.log(b);
+    }).catch(function() {console.log('Oops');});
+}
+
+
+// and…
+
+
 /*
 var game = require("./Commands/Bot_c4.js");
 game["Bot_c4"]('  ',[]);
