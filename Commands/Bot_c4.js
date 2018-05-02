@@ -8,6 +8,10 @@ var jimp = require('jimp');
 
 var obj = null;
 
+//Discord Client, for notifications.
+var disClient = null;
+var tstatus = '';
+  
 module.exports = {
     Bot_c4 : function(msg,args) {
         if (obj === null) obj =  new Connect4(msg,args);
@@ -15,6 +19,9 @@ module.exports = {
         },
     Info : function() {
         return "Connect 4 game";
+    },
+    Init : function(dClient) {
+        disClient =  dClient;
     }
     };
     
@@ -29,30 +36,43 @@ class Connect4 {
         this.args = args;
         this.board = null;
         this.ipath = "./Commands/Images/";
-        this.images = ['red.png', 'green.png', 'c4box.png', 'top.png'];
+        this.images = ['red.png', 'green.png', 'c4box.png', 'top.png', 'bot.png'];
         this.playing = false;
         this.gameOver = false;
         this.helpString = "Type: ```!c4 help``` for help";
         this.players = ['None','',''];
         this.player = 0;
+        this.loaded = false;
+        this.LoadResources();
         }
         
     MessageIn(msg,args) {
+        
+        if (!this.loaded) {
+            console.log('not ready');
+            return;
+        }
+        console.log('Players:' + this.players);
+        console.log('Player:' + this.player);
+        console.log('Playing:' + this.playing);
+        console.log('Finished:' + this.gameOver);
+                
+        
+        
         if (args.length === 0) {
             msg.reply(this.helpString);
             return;
         }
         var cmd = args[0].toLowerCase();
-        
         //End always works
         if (cmd === 'end') {
                 obj = null;
                 return;
             }
-            
          if (cmd === 'show') {
+                tstatus = this.GetNextUp();
+
                 this.DrawBoard();
-                ShowNextUp(msg);
                 return;
             }
         if (this.gameOver) {
@@ -60,6 +80,8 @@ class Connect4 {
             msg.reply("Game is over.  !C4 end to quit");
             return;
         }
+        
+  
         if (this.playing) {
             try {
                 var col = parseInt(cmd);
@@ -71,8 +93,16 @@ class Connect4 {
                 if ((col > 0) && (col <= 8)) {
                     console.log("drop: " + col);
                     this.DropToken(col-1);
-                    this.DrawBoard(msg);
-                    this.ShowNextUp(msg);
+                    if (this.GetWinner()) {
+                        console.log("Winner");
+                        this.gameOver = true;
+                        tstatus = this.GetNextUp();
+                        this.DrawBoard();
+                        return;
+                    }
+                    tstatus = this.GetNextUp();
+                    this.DrawBoard();
+                    //msg.channel.send(this.GetNextUp());
                 }
                 return;
             } catch (err) {
@@ -91,10 +121,20 @@ class Connect4 {
             return;
         }
     }
-    ShowNextUp(msg) {
+    
+    GetNextUp() {
         console.log("Show Next Up:" +this.players[this.player]);
-        if (this.players[this.player] !== '') {
-            msg.channel.send(this.players[this.player] + " up!");
+        try {
+            if (this.gameOver) {
+                return this.players[this.player] + " has won!";
+            }
+            if (this.players[this.player] !== '') {
+                return this.players[this.player] + " is up!";
+            }
+            return 'Player ' + this.player + ' up';
+        } catch (err) {
+            console.log(err);
+            return 'Unknown';
         }
     }
     
@@ -121,10 +161,6 @@ class Connect4 {
     DropToken(x) {
         //board is [x,y]
         var y;
-        
-        
-        
-        
         for (y = 7; y>=0;y--) {
             console.log("Spot " + y + '=' + this.board[x][y]);
             if (this.board[x][y] === 0) {
@@ -152,20 +188,20 @@ class Connect4 {
     
     
     StartGame() {
+        console.log("Starting Game");
         if (this.playing) {
             this.message.reply("Game in progress...");
             return;
         }
-        if (this.gameFinished) return;
+        //if (this.gameFinished) return;
         this.board = Array.from({ length: 8 }, () => Array.from({ length: 8 }, () => 0));
         var x,y;
         for (y = 0; y < 8; y++) 
             for (x = 0; x < 8; x++) this.board[x][y] = 0;
         this.player = 1;
         this.playing = true;
-        this.p1 = '';
-        this.p2 = '';
-        
+        this.players = ['None','',''];
+        tstatus = this.GetNextUp();
         this.DrawBoard();
     }
 
@@ -187,18 +223,25 @@ class Connect4 {
         return 0;
     }
     CountConseq(ix,iy,vx,vy) {
+        
         var last = 0;
         var cons = 0;
         var x = ix;
         var y = iy;
         var i = 0;
         for (i=0;i<8;i++) {
+            
             var test = this.GetBoardLimit(x,y);
-            if (test == last) {
-                if (test != 0) cons++;
-                if (cons >= 4) return test;
+            //console.log(x+" "+y+":" + test + " Last:" + last + " Count:" + cons);
+            
+            if (test === last) {
+                if (test !== 0) cons++;
+                if (cons >= 4) {
+                    console.log("Found a run of 4");
+                    return test;
+                    }
             } else {
-                cons = 0;
+                cons = 1;
                 last = test;
             }
             x+=vx;
@@ -207,6 +250,7 @@ class Connect4 {
         return 0;
     }
     GetWinner() {
+        
         var i;
         for (i=0;i<8;i++) {
             //From the top, look S
@@ -231,57 +275,90 @@ class Connect4 {
             //From the right, look NW
             var res = this.CountConseq(7,i,-1,-1);
             if (res !== 0) return res;
-            return 0;
+            
         }
+        return 0;
     }
    
-    DrawBoard() {
-        try {
-            
-         
-           
-            if (getRndInteger(0,4)>1) {
-                console.log("asdf");
-            }
-            var promises = [];
-            for (var i = 0; i < this.images.length; i++) promises.push(jimp.read(this.ipath+this.images[i]));
-            var bg = new jimp(512, 512, function (err, image) { });
-            
-            console.log('loaded');
-            
-            
-            Promise.all(promises).then(function(data) {return Promise.all(promises);})
-                                 .then(function(data) {
-                                     console.log('loaded');
-                var x,y;
-                
-                for (y = 0; y < 8; y++) { 
-                    for (x = 0; x < 8; x++) { 
-                        bg.blit(data[2],x*64,y*64);
-                        var tile = obj.board[x][y];
-                        if (tile===1) {
-                            bg.composite(data[0],x*64,y*64);
-                        }
-                        if (tile===2) {
-                            bg.composite(data[1],x*64,y*64);
-                        }
-                    }
-                    if (y===0) bg.composite(data[3],0,0);
-                }
-                if (obj.player === 1) bg.composite(data[0],256-32,-32);
-                if (obj.player === 2) bg.composite(data[1],256-32,-32);
-                console.log("wrote the image");
-                bg.write('test.png', function() {
-                console.log("wrote the image");
-                obj.message.channel.send({ file: 'test.png'});
-                
-                
-                });
+    LoadResources() {
+//        this.ipath = "./Commands/Images/";
+//        this.images = ['red.png', 'green.png', 'c4box.png', 'top.png', 'bot.png'];
+    
+    console.log("loading shit");
+    var file = this.ipath+"c4box.png";
+    console.log(file);
+    jimp.read(this.ipath+"c4box.png")
+        .then(function (image) {
+            obj.imBox = image;
+            console.log("Box Loaded");
+            return jimp.read(obj.ipath+"red.png");
+            })
+        .then(function (image) {
+            obj.imRed = image;
+            console.log("Red Loaded");
+            return jimp.read(obj.ipath+"green.png");
+            })
+        .then(function (image) {
+            obj.imGreen = image;
+            return jimp.read(obj.ipath+"top.png");
+            })
+        .then(function (image) {
+            obj.imTop = image;
+            return jimp.read(obj.ipath+"bot.png");
+            })
+        .then(function (image) {
+            obj.imBot = image;
+            return jimp.loadFont(jimp.FONT_SANS_32_WHITE);
+            })
+        .then(function (font) {
+            obj.imFont = font;
+            obj.loaded = true;
+            obj.imBg = new jimp(512, 576, function (err, image) { });
+            console.log("Shit actually loaded now.");                       
+            obj.StartGame();
             });
+    console.log("Shit loading commands complete");            
+    }
+    
+    DrawBoard() {
 
-        } catch (err) {
-            console.log("error");
+        //tstatus = status;
+
+        //setTimeout(myFunc, 1500, 'funky');
+
+        console.log('DrawBoard');
+        var x, y;
+        for (y = 0; y < 8; y++) {
+            for (x = 0; x < 8; x++) {
+                this.imBg.blit(this.imBox, x * 64, y * 64);
+        
+                var tile = obj.board[x][y];
+                if (tile === 1) {
+                    this.imBg.composite(this.imRed, x * 64, y * 64);
+        
+                }
+                if (tile === 2) {
+                    this.imBg.composite(this.imGreen, x * 64, y * 64);
+                }
+            }
+            if (y === 0) {
+                this.imBg.composite(this.imTop, 0, 0);
+            }
         }
+        if (!obj.gameFinished) {
+            if (obj.player === 1)
+                this.imBg.composite(this.imRed, 256 - 32, -32);
+            if (obj.player === 2)
+                this.imBg.composite(this.imGreen, 256 - 32, -32);
+        }
+        this.imBg.composite(this.imBot, 0, 512);
+        this.imBg.print(this.imFont, 20, 525, tstatus);
+        
+        console.log('DrawBoard: Printing done');
+        this.imBg.write('test.png',function () {
+                console.log('DrawBoard: test.png saved');
+                obj.message.channel.send({file: 'test.png'});
+            });
     }
 }
 

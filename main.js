@@ -1,5 +1,5 @@
-var auth = require('./auth.json');
 //var auth = require('./ponz.json');
+var auth = require('./auth.json');
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var getJSON = require('get-json');
@@ -14,6 +14,7 @@ client.on("ready", () => {
 
 client.on("message", async message => {
     try {
+    //    console.log(message.content);
     if (message.content.startsWith(auth.Prefix)) {
         const args = message.content.trim().split(/ +/g);
         const command = args.shift().toLowerCase().slice(1,20);
