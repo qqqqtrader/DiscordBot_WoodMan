@@ -128,7 +128,7 @@ class Connect4 {
                 return this.players[this.player] + " has won!";
             }
             if (this.players[this.player] !== '') {
-                return this.players[this.player] + " is up!";
+                return this.players[this.player] + " up!";
             }
             return 'Player ' + this.player + ' up';
         } catch (err) {
