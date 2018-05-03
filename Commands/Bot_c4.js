@@ -69,7 +69,8 @@ class Connect4 {
         
         
         if (cmd === 'rank') {
-            msg.channel.send("Rankings:  RabbitWood #1");
+            msg.channel.send("Rankings:  RabbitWood 1016");
+            msg.channel.send("Rankings:  RabbitWood  998");
         }
         //End always works
         if (cmd === 'end') {
