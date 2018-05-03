@@ -276,23 +276,35 @@ class Connect4 {
     }
    
     LoadResources() {
-    var ps = [];
-    console.log("Loading now");
-    
-    ps.push(jimp.read(this.ipath+"c4box.png").then(function (image) {obj.imBox = image;}));
-    ps.push(jimp.read(this.ipath+"red.png").then(function (image) {obj.imRed = image;}));
-    ps.push(jimp.read(this.ipath+"green.png").then(function (image) {obj.imGreen = image;}));
-    ps.push(jimp.read(this.ipath+"top.png").then(function (image) {obj.imTop = image;}));
-    ps.push(jimp.read(this.ipath+"bot.png").then(function (image) {obj.imBot = image;}));
-    ps.push(jimp.loadFont(jimp.FONT_SANS_32_WHITE).then(function (font) {obj.imFont = font;}));
-    
-    Promise.all(ps).then( () => {
+        var ps = [];
+        console.log("Loading now");
+
+        ps.push(jimp.read(this.ipath + "c4box.png").then(function (image) {
+            obj.imBox = image;
+        }));
+        ps.push(jimp.read(this.ipath + "red.png").then(function (image) {
+            obj.imRed = image;
+        }));
+        ps.push(jimp.read(this.ipath + "green.png").then(function (image) {
+            obj.imGreen = image;
+        }));
+        ps.push(jimp.read(this.ipath + "top.png").then(function (image) {
+            obj.imTop = image;
+        }));
+        ps.push(jimp.read(this.ipath + "bot.png").then(function (image) {
+            obj.imBot = image;
+        }));
+        ps.push(jimp.loadFont(jimp.FONT_SANS_32_WHITE).then(function (font) {
+            obj.imFont = font;
+        }));
+
+        Promise.all(ps).then(() => {
             obj.loaded = true;
             obj.imBg = new jimp(512, 576, function (err, image) { });
-            console.log("Actually loaded now.");                       
+            console.log("Actually loaded now.");
             obj.StartGame();
-    });
-    console.log("Loading commands complete");            
+        });
+        console.log("Loading commands complete");
     }
     
     DrawBoard() {
