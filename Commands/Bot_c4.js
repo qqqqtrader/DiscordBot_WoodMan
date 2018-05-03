@@ -59,15 +59,18 @@ class Connect4 {
         console.log('Playing:' + this.playing);
         console.log('Finished:' + this.gameOver);
                 
-        if (cmd === 'rank') {
-            msg.channel.send("Rankings:  RabbitWood #1");
-        }
+       
         
         if (args.length === 0) {
             msg.reply(this.helpString);
             return;
         }
         var cmd = args[0].toLowerCase();
+        
+        
+        if (cmd === 'rank') {
+            msg.channel.send("Rankings:  RabbitWood #1");
+        }
         //End always works
         if (cmd === 'end') {
                 obj = null;
