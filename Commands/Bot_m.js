@@ -7,7 +7,7 @@
 module.exports =
 {
     Bot_m : function(msg,arg) {
-        //msg.reply(eval(arg[0])); //was a joke
+        msg.reply(eval(arg[0])); //was a joke
     },
     Info : function() {
         return "Self explanatory.";
