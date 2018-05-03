@@ -9,7 +9,7 @@ module.exports =
 {
 
     Bot_monopoly : function(msg,arg) {
-        msg.chanell.send("Banker Wins!  Game over!!");
+        msg.channel.send("Banker Wins!  Game over!!");
     },
     
     Info : function() {
