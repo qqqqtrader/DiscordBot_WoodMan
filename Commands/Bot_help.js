@@ -21,15 +21,10 @@ class  Helper {
         this.message = msg;
         this.args = args;
         }
-
-
     Run() {
             var fs = require('fs');
             var files = fs.readdirSync('./Commands/');
             this.message.channel.send(files);
-            
-            //console.log(st);
-            
         }
     }
 
