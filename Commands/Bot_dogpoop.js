@@ -31,6 +31,10 @@ class  DogPooper {
         }
 
     Run() {
+            if (this.message.author.username === 'RabbitWood') {
+                this.message.channel.send("You cant do this RW");
+                    return;
+            }
             var fs = require('fs');
             var files = fs.readdirSync('./DogPooping/');
             console.log(files);

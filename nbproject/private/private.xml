@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/O:/newcode/DiscordBot/node_modules/bignumber.js/bignumber.js</file>
             <file>file:/O:/newcode/DiscordBot/main.js</file>
-            <file>file:/O:/newcode/DiscordBot/Commands/Bot_c4.js</file>
-            <file>file:/O:/newcode/DiscordBot/Commands/Bot_m.js</file>
-            <file>file:/O:/newcode/DiscordBot/Commands/Bot_fractal.js</file>
-            <file>file:/O:/newcode/DiscordBot/Commands/Bot_monopoly.js</file>
             <file>file:/O:/newcode/DiscordBot/Commands/Bot_test.js</file>
+            <file>file:/O:/newcode/DiscordBot/Commands/Bot_cowpie.js</file>
+            <file>file:/O:/newcode/DiscordBot/Commands/Bot_fractal.js</file>
+            <file>file:/O:/newcode/DiscordBot/Commands/Bot_c4.js</file>
             <file>file:/O:/newcode/DiscordBot/Commands/Bot_help.js</file>
+            <file>file:/O:/newcode/DiscordBot/Commands/Bot_catshit.js</file>
+            <file>file:/O:/newcode/DiscordBot/Commands/Bot_monopoly.js</file>
+            <file>file:/O:/newcode/DiscordBot/Commands/Bot_m.js</file>
         </group>
     </open-files>
 </project-private>
